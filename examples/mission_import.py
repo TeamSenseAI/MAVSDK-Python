@@ -9,6 +9,7 @@ import mavsdk.mission_raw
 async def run():
     drone = System()
     await drone.connect(system_address="udp://:14540")
+    # await drone.connect(system_address="/dev/ttyACM0")
 
     print("Waiting for drone to connect...")
     async for state in drone.core.connection_state():
@@ -18,7 +19,8 @@ async def run():
 
     mission_import_data = await \
         drone.mission_raw.import_qgroundcontrol_mission(
-            "example-mission.plan")
+            # "example-mission.plan")
+            "Hitl.plan")
     print(f"{len(mission_import_data.mission_items)} mission items imported")
     await drone.mission_raw.upload_mission(mission_import_data.mission_items)
     print("Mission uploaded")
